@@ -18,5 +18,8 @@
     <ClCompile Include="variable.c">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="addg_val.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
