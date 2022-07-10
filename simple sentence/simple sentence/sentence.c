@@ -26,8 +26,8 @@ int main(){
 	while (line < 10) //while循环语句,一直到line=10结束
 	{
 		printf("%d\t写代码\n",line+1);
-		line++;		//line+1,a=i++先将i赋值给a再i=i+1(a=i,i=i+1)
-					//a=++i先i=i+1再将i赋值给a(i=i+1,a=i)
+		line++;		//line+1;i=0,a=i++先i=i+1自增i=1,再返回自增前的值i'=0,结果为i=i+1=1,a=i'=0;(类似a=i,i=i+1)
+					//a=++i先i=i+1自增再将自增后的i赋值给a(类似i=i+1,a=i)
 	}
 
 	if (line == 10)//if语句判断是否达到要求
