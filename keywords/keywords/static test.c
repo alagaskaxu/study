@@ -11,7 +11,8 @@ int add(int x, int y)
 
 static int add1(int x, int y)//当函数被static修饰时,和全局变量效果一样
 {					//函数变为静态函数add1,内部链接属性,无法被外部调用,只能在源文件(static test.c)内部使用
-	return x + y;
+					//静态函数只是让该函数只能在本文件使用,可以避免重名等,但是不意味着函数里的变量也变为静态
+	return x + y;	//静态函数中的 int a; 和普通函数是一样的,会自动销毁,而不是变为static int a;
 }
 
 int sub(int x, int y)
