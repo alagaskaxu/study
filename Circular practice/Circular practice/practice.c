@@ -1,6 +1,8 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
-
+#include <stdlib.h>		//system函数的头文件,vs2019好像不引头文件也可以使用,不报错
+#include <string.h>		//strlen的头文件
+#include <Windows.h>	//sleep函数的头文件
 //循环练习
 
 //循环遍历找一个数字x
@@ -52,6 +54,7 @@ int binsearch(int x, int v[], int n)
 	{
 		return -1;	//-1 为自定义的值,在主函数内设置为未找到
 	}
+	return -1;
 }
 
 int main()
@@ -104,6 +107,62 @@ int main()
 		printf("数组a[10]未找到对应数字%d\n",x);
 	else
 		printf("a[%d] 为数字x = %d", i, a[i]);
-		
+
+	//编写代码,演示多个字符从两端移动,向中间汇聚的效果
+	//welcome to c!!!
+	//###############
+	char arr1[] = "welcome to c!!!";
+	char arr2[] = "###############";
+	int left = 0;	//左下标
+	int right = strlen(arr1) - 1;	//strlen函数,求字符串长度,到'\0'结束,'\0'不计算在长度内; sizeof操作符求定义的变量生效后所占的内存数(变量在内存中占多少字节大小)
+							//由于字符串结尾有一个隐藏的'\0'字符,所以用sizeof计算字符串数组的元素个数,会把隐藏的'\0'也计算在内得出数组实际的元素个数,而隐藏的'\0'一般用不到且不建议更改它(会导致字符串找不到结束符)
+							//本意是想求字符串最右的字符的下标,用sizeof会比预想的多一个'\0'字符,相比用strlen求出字符串的长度会大1
+
+	while (left <= right)	//当left与right交错过后,所有元素替换打印完毕
+		//最后一次循环可能是left == right ,或者left+1=right时,具体看字符串长度是奇数还是偶数,但是最后一次循环打印完结果后,left一定会大于right,然后循环结束,所以循环的判断条件为left<=right
+	{
+		//一次数组的替换
+		arr2[left] = arr1[left];//用1数组左边的元素替换2数组左边的元素
+		arr2[right] = arr1[right];
+		system("cls");	//执行清屏指令
+		printf("%s\n", arr2);
+		Sleep(500);	//sleep函数,单位为ms;睡眠500ms(等待500ms)
+		left++;
+		right--;
+	}
+
+	//模拟用户登录情景,并且只能登录三次.(只允许输入三次密码,如果密码正确则提示登录成功,如果三次均输入错误,则推出程序)
+	i = 0 , j = 3;  //之前定义过,直接赋值初始化
+	char password[20] = {0};
+	//假设正确密码为字符串"123456"
+	for ( i = 0; i < 3; i++) //最多输入三次,循环3次
+	{
+		j--;
+		printf("(正确密码为123456)请输入密码:\n");
+		scanf("%s", password);
+		//if ("123456" == password)	//两个字符串的比较,不能使用 ==等号,而是使用strcmp函数(字符串比较函数)来专门比较字符串
+		//strcmp(str1,str2);如果str1<str2返回<0的值; str1 == str2 返回值为0;str1>str2返回>0的值
+		//str1 = abcd ;strcmp函数一个字符一个字符去比较其ASCII码的值的大小,abc都一样为0
+		//str2 = abcccc ;到第四个字符d和c时str1的d的ASCII码>c的ASCII码,得到>0的值;d>c最后直接返回>0的值;不看整体字符串的长度,而是比较单个字符的大小
+		if (strcmp(password, "123456") == 0) //如果字符串相等,这strcmp函数返回值为 0
+		{
+			printf("密码正确,登录成功\n");
+			break;
+		}
+		else
+		{
+			printf("密码错误,还有%d次机会\n", j);
+		}
+
+	}
+	//输入3次密码后,for循环结束接下来执行后面的代码
+	if (3 == i)//当密码正确时break,i一定小于3; 当i=2时第三次输入密码,如果正确break,i仍为2, 如果密码错误i++,i变为3.
+				//只有3次循环结束(即输入过三次密码),密码全部错误时,i才会等于3; 避免密码正确也输出if里的失败语句
+	{
+		printf("三次密码均错误,退出程序\n");
+	}
+
+
+
 	return 0;
 }
