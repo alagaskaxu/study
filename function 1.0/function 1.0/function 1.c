@@ -1,6 +1,7 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
 #include <string.h>		//strcpy()函数的头文件
+#include <math.h>		//sqrt()开方函数
 
 //函数讲解
 //函数:也称子程序,是一个大型程序中的某部分代码,由一个或多个大型语句块组成,负责完成某项特定任务,具备一定的独立性
@@ -10,7 +11,7 @@
 //常用库函数有:IO函数(输入输出函数),字符串操作函数,字符操作函数,内存操作函数,时间/日期函数,数字函数,其它库函数
 
 //求最大值的函数
-int get_max(int x,int y)	//自定义函数get_max,形参x,y
+int get_max(int x,int y)	//自定义函数get_max,形参x,y;传值调用
 {					
 	int z = 0;
 	if (x > y)
@@ -31,13 +32,26 @@ int get_max(int x,int y)	//自定义函数get_max,形参x,y
 	y = tmp;
 }
 */
-//正确写法:用指针,传地址
+//正确写法:用指针,传地址; 传址调用
 void swap(int* pa, int* pb)	//不需要返回值,则用void定义函数
 {
 	int tmp = 0;
 	tmp = *pa; //此时*pa就表示实参a, * 为解引用,表示该地址所对应的那个变量(*pa 就是pa地址所指向的变量a,即*pa就是int变量a)
 	*pa = *pb;
 	*pb = tmp;
+}
+
+int is_prime(int n)
+{
+	//用n除2-(n-1)的数,如果整除,则不是素数,返回0
+	int j = 0;						//假设数m=p*Q,且p≤Q则m=p*Q≥p*p即p≤√m,Q≥√m 所以m必有一个小于或等于其平方根的因数
+	for ( j = 2; j <= sqrt(n); j++)	//用开方sqrt()函数优化运算次数,原理:一个数必有一个小于或等于其平方根的因数.(类似用除2来去除大因数只求小的因数是否满足条件,因为对应大因数*小因数等于要判断的数,而只要有一个因数,就不是素数)
+									//根号i的平方等于i本身,必有一个小于或等于根号i的因数
+	{
+		if (n % j == 0)
+			return 0;
+	}
+	return 1; //返回1表示是素数
 }
 
 int main()
@@ -79,7 +93,7 @@ int main()
 
 	//例子:写一个函数可以找出两个整数中的最大值
 	int a = 10;
-	int b = 20;	//实参a,b
+	int b = 20;	//实参a,b						//传值调用
 	int max = get_max(a + 15 , get_max(b,50));	//调用自定义函数get_max,实参可以是:常量,变量,表达式,函数等
 	printf("max = %d\n", max);
 
@@ -87,8 +101,21 @@ int main()
 	a = 10;
 	b = 20;
 	//swap(a, b);	//直接传值,发现函数没效果只是形参改变,实参没变; 需要传地址,才能改变实参
-	swap(&a, &b);
+	swap(&a, &b);	//传址调用
 	printf("a=10,b=20,交换后:a= %d,b= %d\n", a, b);
 
+	//通过函数输出100-200的素数
+	printf("100-200间的素数有:\n");
+	int i = 0,count = 0;
+	for ( i = 100; i <= 200; i++)
+	{
+		//判断i是否为素数
+		if (is_prime(i) == 1)
+		{
+			count ++;
+			printf("%d ", i);
+		}
+	}
+	printf("\n一共有%d个素数\n",count);
 	return 0;
 }
