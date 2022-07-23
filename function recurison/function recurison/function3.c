@@ -1,5 +1,6 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
+#include <string.h>
 
 //函数递归
 /*
@@ -100,6 +101,8 @@ int pfib(int n)
 	return c;
 }
 
+//逆序字符串
+void reverse_string(char* str);
 
 int main() 
 {
@@ -133,8 +136,56 @@ int main()
 	printf("递归求第%d 个斐波那契数为 %d\n", n, fib(n));
 	//递归函数fib()效率太低,有大量的重复操作,n稍微大点(n=50,可能就算不出了,而且超过int的长度)就要计算很久而且容易溢出
 
+	//循环复习
+	//求1/1-1/2+1/3-1/4+.....+1/99-1/100的值
 
-
+	int i = 0;
+	double sum = 0.0;
+	/*
+	for ( i = 1; i <= 100; i++)
+	{
+		if (0 == i % 2)
+		{
+			sum -= 1.0 / i;
+		}
+		else
+		{
+			sum += 1.0 / i;
+		}
+	}
+	*/
+	int flag = 1;
+	for (i = 1; i <= 100; i++)
+	{
+			sum += flag* 1.0 / i;
+			flag = -flag;
+	}
+	
+	printf("1/1-1/2+...+1/99-1/100 = %lf\n", sum);
+	
+	//递归练习
+	//将字符串逆序输出
+	char chr[] = "abcdef";
+	reverse_string(chr);
+	printf("逆序字符串为 %s\n", chr);
 
 	return 0;
+}
+
+//逆序字符串
+//	 reverse_string(char* str)
+void reverse_string(char str[])	//char str[]和char* str本质一样都可以
+{
+	
+	char tmp = *str;	//存放数组str的首个元素
+	int len = strlen(str);
+	*str = str[len - 1];	//最后一个元素放第一个
+	str[len - 1] = '\0';	//最后一个元素变为'\0'
+	if (strlen(str + 1)>= 2 )//当字符串个数在两个以上才开始递归
+	{
+		reverse_string(str + 1);	//逆序首地址str+1的数组
+	}
+	
+	str[len - 1] = tmp;		//将首元素放最后
+
 }
