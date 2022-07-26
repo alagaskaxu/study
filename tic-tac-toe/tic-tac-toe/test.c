@@ -41,7 +41,7 @@ void game()
 		ComputerMove(board, ROW, COL);	//此时的ROW和COL用来帮助电脑找到坐标范围来下棋
 		DisplayBoard(board, ROW, COL);
 		//判断电脑是否赢得游戏
-		char ret = IsWin(board, ROW, COL);	//用来判断游戏的状态
+		ret = IsWin(board, ROW, COL);	//用来判断游戏的状态
 		//返回'C'游戏继续,循环继续
 		if ('C' != ret)	//不为C游戏结束,跳出循环,来到下面的if判断
 			break;
@@ -49,19 +49,25 @@ void game()
 
 	if ('*' == ret)	//返回值'*'为玩家获胜
 	{
-		printf("玩家获胜!!\n");
+		printf("*****************\n");
+		printf("**  玩家获胜!!  **\n");
+		printf("*****************\n");
 	}
 	else if ('#' == ret)	//返回值为'#'电脑获胜
 	{
-		printf("电脑获胜!!\n");
+		printf("*****************\n");
+		printf("**  电脑获胜!!  **\n");
+		printf("*****************\n");
 	}
 	else		//返回值为'Q' 平局
 	{
-		printf("平局\n");	
+		printf("***********\n");
+		printf("**  平局  **\n");	
+		printf("***********\n");
 	}
 
 	DisplayBoard(board, ROW, COL);	//打印最后的结果
-
+	printf("\n======================================\n");
 } //void game()
 
 
@@ -92,3 +98,4 @@ int main()
 
 	return 0;
 }
+
