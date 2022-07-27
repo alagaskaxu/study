@@ -5,11 +5,11 @@
 
 void menu()	//菜单函数
 {
-	printf("***********************\n");
+	printf("************ ***********\n");
 	printf("*****   扫雷游戏   *****\n");
 	printf("*****    1.play   *****\n");
 	printf("*****    0.exit   *****\n");
-	printf("***********************\n");
+	printf("************ ***********\n");
 }//menu()
 
 void game()
@@ -54,17 +54,22 @@ int main()
 	{
 		menu();
 		printf("请选择(1/0):> ");
+
 		scanf("%d", &input);
 
 		switch (input)
 		{
 		case 1:
+			system("cls");	//清理屏幕,游戏开始
 			game();	//扫雷游戏的具体运行
 			break;
 		case 0:
+			system("cls");//清理屏幕,游戏结束
 			printf("退出游戏\n");
 			break;
 		default:
+			system("cls");//清理屏幕,重新选择
+			printf("=======================\n");
 			printf("!!输入错误!!\n请输入1或0\n");
 			break;
 		}
