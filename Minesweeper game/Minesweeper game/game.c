@@ -119,12 +119,12 @@ void SearchBomm(char mine[ROWS][COLS], char show[ROWS][COLS], int row, int col, 
 		if (0 == num )
 		{
 			//第一次排查的流程
-			*pwin++;//win计数器+1
+			(*pwin)++;//win计数器+1
 			//周围没有雷且没被标记,则show[x][y]元素变为' '或者'0'
 			if ('!' != show[x][y])
 			{
 				show[x][y] = ' ';
-			}	
+			}
 			
 			//让(x,y)周围的八个坐标开始进行排查
 			for (int i = -1; i < 2; i++)
@@ -145,7 +145,7 @@ void SearchBomm(char mine[ROWS][COLS], char show[ROWS][COLS], int row, int col, 
 			//当前坐标周围有雷则,将雷数记录在show数组,
 			show[x][y] = num + '0';	//show数组为char类型,num为int类型
 			//win计数器+1
-			*pwin++;
+			(*pwin)++;
 		}
 
 	}//if(坐标合法)
@@ -214,11 +214,14 @@ void FindMine(char mine[ROWS][COLS], char show[ROWS][COLS], int row, int col)
 		printf("2.标记或取消雷\n");
 		printf("0.结束游戏\n");
 		printf("请选择操作 1 or 2 :> ");
-		while ((choice = getchar()) != '\n')
+		//fflush(stdin);	//失效,不起作用,可能是编译器或写法问题,fflush只支持file*类型,可能只能刷新文件流的缓冲区,键盘输入不行??
+		//理论上可以清空全部缓冲区	fflush()刷新缓冲区函数,stdin标准输入流,如键盘,文件等; 刷新输入流的缓冲区
+
+		//利用getchar()加循环,一个一个清空
+		while ((choice = getchar()) != '\n')	//getchar得到一个字符,while一直循环得到字符一直到\n
 			;//空语句,清理缓冲区,防止缓冲区自动输入,去掉'\n'字符
-
+		
 		scanf("%d", &choice);
-
 		switch (choice)
 		{
 			//排查雷
@@ -227,6 +230,8 @@ void FindMine(char mine[ROWS][COLS], char show[ROWS][COLS], int row, int col)
 			DisplayBoard(show, row, col);	//打印要排查的棋盘
 			printf("======================================\n");
 			printf("请输入要排查的坐标,坐标从左上角1 1开始:> ");
+			while ((choice = getchar()) != '\n')	//getchar得到一个字符,while一直循环得到字符一直到\n
+				;//空语句,清理缓冲区,防止缓冲区的无关数据传入输入,去掉'\n'字符
 			scanf("%d %d", &x, &y);	//x,y 范围[1,9]
 			//判断坐标合法性
 			if (x >= 1 && x <= row && y >= 1 && y <= col)
@@ -277,6 +282,8 @@ void FindMine(char mine[ROWS][COLS], char show[ROWS][COLS], int row, int col)
 			//标记雷
 		case 2:
 			//是否需要标记雷
+			while ((choice = getchar()) != '\n')	//getchar得到一个字符,while一直循环得到字符一直到\n
+				;//空语句,清理缓冲区,防止缓冲区的无关数据传入输入,去掉'\n'字符
 			MarkMine(show, row, col);
 			break;
 
@@ -290,20 +297,20 @@ void FindMine(char mine[ROWS][COLS], char show[ROWS][COLS], int row, int col)
 			printf("!!输入错误!!\n请输入0,1或2\n");
 			Sleep(500);	//等待0.5s
 			break;
-		}
+		}//switch(choice)
 
-	}//while(win < row*col - MINES)
+	}//while(win < row*col - MINES && 1 == start)
 	
 	if (row * col - MINES == win)
 	{
 		//展示雷区
+		system("cls");	//清屏
 		DisplayMine(mine, row, col);
 		printf(" !!!!!  恭喜你  !!!!!\n");
 		printf("!!!!!  游戏获胜  !!!!!\n");
 		printf("============================\n");
 		Sleep(500);	//等待0.5s
 	}
-
 }//FindMine()
 
 

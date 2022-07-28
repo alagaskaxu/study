@@ -12,7 +12,7 @@
 #define COL 9 
 #define ROWS ROW + 2	//创建的数组大小为11*11
 #define COLS COL + 2	//最外边存在一圈隐藏边界,防止坐标越界
-#define MINES 1		//雷的数量
+#define MINES 10		//雷的数量
 
 //函数声明
 

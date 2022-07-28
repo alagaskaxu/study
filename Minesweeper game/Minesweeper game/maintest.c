@@ -54,7 +54,7 @@ int main()
 	{
 		menu();
 		printf("请选择(1/0):> ");
-
+		//fflush(stdin);	//清空全部缓冲区	fflush()刷新缓冲区函数,stdin标准输入流,如键盘,文件等; 刷新输入流的缓冲区
 		scanf("%d", &input);
 
 		switch (input)
