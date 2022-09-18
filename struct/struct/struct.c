@@ -21,7 +21,18 @@ struct Stu
 	char id[20];	//学号
 	struct score sc;	//创建成绩结构体类型的 sc对象,结构体可以嵌套结构体
 
-}s1,s2;	//s1,s2也是结构体变量和 s 一样,但是s1和s2是全局变量
+}s1,s2;	//s1,s2也是结构体变量(对象)和 s 一样,但是s1和s2是全局变量
+
+//函数调用结构体参数,传值调用
+void printl(struct Stu t)
+{
+	printf("%s %d %s %s %s %d\n", t.name, t.age, t.id, t.sc.course_name, t.sc.course_id, t.sc.score);
+}
+//地址用指针变量来接收,传址调用
+void printl2(struct Stu* ps)
+{
+	printf("%s %d %s %s %s %d\n", ps->name, (*ps).age, ps->id, ps->sc.course_name, (*ps).sc.course_id, ps->sc.score);
+}
 
 int main()
 {
@@ -43,7 +54,13 @@ int main()
 	printf("course_name = %s\n", (*ps).sc.course_name);	//指针解引用访问学生课程名
 	printf("course_id = %s\n", ps->sc.course_id);	//指针->直接访问学生对象的sc结构体中的课程id
 
-
+	//结构体传参
+	//用函数打印结构变量的数值
+	printf("用函数打印结构体的数值\n");
+	printl(s);	//传值调用
+	printl2(&s);	//传址调用
+	//结构体传参,推荐使用传址调用
+	//传址调用优点:1.可以节省内存空间(传值需要形参也开辟出一块与实参相同大小的空间,结构体实参一般较大); 2.传址调用,利用指针可以修改实参的数据
 
 
 	return 0;
